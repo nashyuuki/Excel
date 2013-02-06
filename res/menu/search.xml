@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/search_name"
+        android:title="@string/search_name" />
+
+    <item android:title="@string/search_people">
+        <menu>
+            <!-- The none checkableBehavior is default, but we explicitly show it here. -->
+            <group android:id="@+id/search_people"
+                    android:checkableBehavior="none">
+                <!-- Notice how these items inherit from the group. -->
+                <item android:id="@+id/number_1"
+                        android:title="@string/number1" />
+                <item android:id="@+id/number_2"
+                        android:title="@string/number2" />
+                <item android:id="@+id/number_2_"
+                        android:title="@string/number2_" />
+                <item android:id="@+id/number_3"
+                        android:title="@string/number3" />
+                <item android:id="@+id/number_4"
+                        android:title="@string/number4" />
+                <item android:id="@+id/number_5"
+                        android:title="@string/number5" />
+                <item android:id="@+id/number_6"
+                        android:title="@string/number6" />
+                <item android:id="@+id/number_7"
+                        android:title="@string/number7" />
+                <item android:id="@+id/number_8"
+                        android:title="@string/number8" />
+                <item android:id="@+id/number_9"
+                        android:title="@string/number9" />
+                <item android:id="@+id/number_10"
+                        android:title="@string/number10" />
+                <item android:id="@+id/number_11"
+                        android:title="@string/number11" />
+                <item android:id="@+id/number_12"
+                        android:title="@string/number12" />
+            </group>
+        </menu>
+    </item>
+    <item android:id="@+id/search_date"
+        android:title="@string/search_date" />
+</menu>

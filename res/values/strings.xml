@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ExcelAndroid</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+  	<string name="search_label">Search Demo</string> 
+  	<string name="search_hint">Search Demo Hint</string> 
+  	<string name="search_name">Search Name</string> 
+  	<string name="search_people">Search People</string> 
+  	<string name="number1">人數1</string> 
+  	<string name="number2">人數2</string> 
+  	<string name="number2_">人數2+</string> 
+	<string name="number3">人數3</string> 
+	<string name="number4">人數4</string> 
+	<string name="number5">人數5</string> 
+	<string name="number6">人數6</string> 
+	<string name="number7">人數7</string> 
+	<string name="number8">人數8</string> 
+	<string name="number9">人數9</string> 
+	<string name="number10">人數10</string> 
+	<string name="number11">人數11</string> 
+	<string name="number12">人數12</string> 
+	<string name="search_date">Search Date</string> 
+
+</resources>
