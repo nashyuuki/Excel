@@ -22,5 +22,6 @@
 	<string name="number11">人數11</string> 
 	<string name="number12">人數12</string> 
 	<string name="search_date">Search Date</string> 
+	<string name="search_charts">Search Charts</string> 
 
 </resources>

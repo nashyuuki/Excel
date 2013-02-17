@@ -20,6 +20,10 @@ public class DateInfo
 	{
 		this.name = name;
 	}
+	public GregorianCalendar getCalendar()
+	{
+		return calendar;
+	}
 	public Date getDate()
 	{
 		return calendar.getTime();
@@ -36,10 +40,10 @@ public class DateInfo
 	{
 		return (calendar.get(Calendar.MONTH)+1)+"月";
 	}
-	public String getInfo()
+	public static String getDateString(GregorianCalendar gc)
 	{
 		String am_pm=null;
-		if(calendar.get(Calendar.AM_PM)==0)
+		if(gc.get(Calendar.AM_PM)==0)
 		{
 			am_pm="上午";
 		}
@@ -47,10 +51,14 @@ public class DateInfo
 		{
 			am_pm="下午";
 		}
-		return  (calendar.get(Calendar.MONTH)+1)+"月"+
-				calendar.get(Calendar.DAY_OF_MONTH)+"日"+
+		return  (gc.get(Calendar.MONTH)+1)+"月"+
+				gc.get(Calendar.DAY_OF_MONTH)+"日"+
 				am_pm+
-				calendar.get(Calendar.HOUR)+"點"+
-				calendar.get(Calendar.MINUTE)+"分";
+				gc.get(Calendar.HOUR)+"點"+
+				gc.get(Calendar.MINUTE)+"分";
+	}
+	public String getInfo()
+	{
+		return getDateString(calendar);
 	}
 }

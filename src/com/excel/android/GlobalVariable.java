@@ -1,5 +1,6 @@
 package com.excel.android;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Vector;
 
@@ -9,6 +10,8 @@ public class GlobalVariable extends Application
 {
 	private GameInfo[] gameInfos = null;
 	private LinkedHashMap<String ,Vector<DateInfo>> dateInfoTable= null;
+	private HashMap <String ,Integer> gameNo = null;
+	private Vector<GameInfo> charts = null;
 	public GlobalVariable()
 	{
 		
@@ -28,5 +31,21 @@ public class GlobalVariable extends Application
 	public void setDateInfoTable(LinkedHashMap<String, Vector<DateInfo>> dateInfoTable)
 	{
 		this.dateInfoTable = dateInfoTable;
+	}
+	public HashMap<String, Integer> getGameNo()
+	{
+		return gameNo;
+	}
+	public void setGameNo(HashMap<String, Integer> gameNo)
+	{
+		this.gameNo = gameNo;
+	}
+	public Vector<GameInfo> getCharts()
+	{
+		return charts;
+	}
+	public void setCharts(Vector<GameInfo> charts)
+	{
+		this.charts = charts;
 	}
 }

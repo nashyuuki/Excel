@@ -2,7 +2,6 @@ package com.excel.android;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,12 +24,15 @@ public class DataListActivity extends ListActivity
 	public GameInfo[] gameInfos = null;
 	public LinkedHashMap <String ,Vector<DateInfo>> dateInfoTable=null;
 	
-//	public Hashtable <String ,Vector<DateInfo>> dateInfoTable = null;
 	public GlobalVariable globalVariable;
-	public Vector<Integer> listNo=new Vector<Integer>();
+	public Vector<Integer> listNo=new Vector<Integer>();//用來紀錄目前顯示gameInfos的編號 
+	private boolean isNumber=false;//顯示編號 用在排行榜
+	//DataListActivity 子類別 SearchName SearchPeople ExcelAndroidActivity 顯示的gameInfo都不同
+	//this.setListNo(); this.setLists();
 	public DataListActivity()
 	{
 	}
+	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
@@ -43,7 +45,14 @@ public class DataListActivity extends ListActivity
 		{
 			int no=listNo.get(i);
 			Map<String, Object> item = new HashMap<String, Object>();
-			item.put(NAME, gameInfos[no].getName());
+			if(isNumber)
+			{
+				item.put(NAME, (i+1)+". "+gameInfos[no].getName());
+			}
+			else
+			{
+				item.put(NAME, gameInfos[no].getName());
+			}
 			item.put(INFO, gameInfos[no].getInfo());
 			items.add(item);
 		}
@@ -57,6 +66,7 @@ public class DataListActivity extends ListActivity
 						android.R.id.text2 });
 		setListAdapter(simpleAdapter);
 	}
+	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id)
 	{
 		// 取得目前List的位置
@@ -70,40 +80,33 @@ public class DataListActivity extends ListActivity
 	}
 	private void dialog(final int no, final int index, final int top)
 	{
+		String name=gameInfos[no].getName();
 		AlertDialog.Builder builder = new Builder(DataListActivity.this);
 		if (gameInfos[no].getNumber() == -1)
 		{
-			builder.setMessage("目前沒有次數是否+1");
-		} else
-		{
-			builder.setMessage("目前次數" + gameInfos[no].getNumber()
-					+ "是否+1");
+			builder.setMessage("目前沒有遊戲紀錄");
+		} 
+		else
+		{	
+			builder.setItems(gameInfos[no].getRecord(), null);
 		}
-
-		builder.setTitle("提示");
-		builder.setPositiveButton("OK", new OnClickListener()
+		builder.setTitle(name+"遊戲紀錄");
+		builder.setPositiveButton("新增", new OnClickListener()
 		{
+			@Override
 			public void onClick(DialogInterface dialog, int which)
 			{
-				
-				int number = gameInfos[no].getNumber();
-				if (number == -1)
-				{
-					gameInfos[no].setNumber(1);
-				} 
-				else
-				{
-					gameInfos[no].setNumber(number + 1);
-				}
+				String name=gameInfos[no].getName();
+				DateInfo dateInfo=setDateInfo(name);
+				gameInfos[no].putRecord(dateInfo.getCalendar());
 				setLists();
 				getListView().setSelectionFromTop(index, top);
-				String name=gameInfos[no].getName();
-				setDateInfo(name);
 				dialog.dismiss();
 			}
 		});
-		builder.setNegativeButton("Cancel", new OnClickListener()
+		builder.setNegativeButton("取消", new OnClickListener()
 		{
+			@Override
 			public void onClick(DialogInterface dialog, int which)
 			{
 				dialog.dismiss();
@@ -111,7 +114,7 @@ public class DataListActivity extends ListActivity
 		});
 		builder.create().show();
 	}
-	private void setDateInfo(String name)
+	private DateInfo setDateInfo(String name)
 	{
 		DateInfo dateInfo=new DateInfo();
 		dateInfo.setName(name);
@@ -123,5 +126,14 @@ public class DataListActivity extends ListActivity
 			dateInfoTable.put(month, dateInfos);
 		}
 		dateInfos.add(dateInfo);
+		return dateInfo;
+	}
+	public boolean isNumber()
+	{
+		return isNumber;
+	}
+	public void setNumber(boolean isNumber)
+	{
+		this.isNumber = isNumber;
 	}
 }

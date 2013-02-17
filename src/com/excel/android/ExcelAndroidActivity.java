@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Vector;
 
@@ -40,6 +41,8 @@ public class ExcelAndroidActivity extends DataListActivity
 	private File file;
 	private Workbook workbook = null;
 	private boolean isSave=true;
+	private HashMap <String ,Integer> gameNo=new HashMap <String ,Integer>();//遊戲名字編號
+	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
@@ -50,6 +53,7 @@ public class ExcelAndroidActivity extends DataListActivity
 		globalVariable.setGameInfos(gameInfos);
 		//將gameInfo放到全域變數供其他Acticity使用 要設定AndroidManifest.xml
 		globalVariable.setDateInfoTable(dateInfoTable);
+		globalVariable.setGameNo(gameNo);
 		this.setListNo();
 		this.setLists();
 		getListView().setTextFilterEnabled(true);
@@ -70,7 +74,7 @@ public class ExcelAndroidActivity extends DataListActivity
 	private void initDateInfo()
 	{
 		dateInfoTable=new LinkedHashMap<String ,Vector<DateInfo>>();
-		for(int i=1;i<workbook.getNumberOfSheets();i++)
+		for(int i=2;i<workbook.getNumberOfSheets();i++)
 		{
 			Sheet sheet = workbook.getSheet(i);
 			String name=sheet.getName();
@@ -94,6 +98,9 @@ public class ExcelAndroidActivity extends DataListActivity
 						dateInfo.fixTimeZone();
 					}
 				}
+				String dateName=dateInfo.getName();
+				int no=gameNo.get(dateName);
+				gameInfos[no].putRecord(dateInfo.getCalendar());
 				dateInfos.add(dateInfo);
 			}
 		}
@@ -158,7 +165,9 @@ public class ExcelAndroidActivity extends DataListActivity
 				Cell cell = sheet.getCell(j, i);
 				if (j == 0)
 				{
-					gameInfos[i].setName(cell.getContents());
+					String name=cell.getContents();
+					gameInfos[i].setName(name);
+					gameNo.put(name, i);
 				} 
 				else if (j == 1)
 				{
@@ -174,11 +183,6 @@ public class ExcelAndroidActivity extends DataListActivity
 				} 
 				else if (j == 4)
 				{
-					if (cell.getContents() != "")
-					{
-						gameInfos[i].setNumber(Integer.valueOf(cell
-								.getContents()));
-					}
 				}
 			}
 		}
@@ -245,6 +249,16 @@ public class ExcelAndroidActivity extends DataListActivity
 					if (gameInfos[i].getNumber() != -1)
 					{
 						addNumber(excelSheet, 4, i, gameInfos[i].getNumber());
+					}
+				}
+				WritableSheet chartsSheet = wbsheet.getSheet(1);
+				Vector<GameInfo> charts=globalVariable.getCharts();
+				if(charts!=null)
+				{
+					for(int i=0;i<charts.size();i++)
+					{
+						this.addName(chartsSheet,0,i,charts.get(i).getName());
+		        		this.addNumber(chartsSheet, 1, i, charts.get(i).getNumber());
 					}
 				}
 				String[] keys = dateInfoTable.keySet().toArray(new String[dateInfoTable.size()]);
@@ -315,6 +329,10 @@ public class ExcelAndroidActivity extends DataListActivity
 		case R.id.search_date:
 			Intent intent=new Intent(this,SearchDate.class);
 			this.startActivity(intent);
+			break;
+		case R.id.search_charts:
+			Intent cIntent=new Intent(this,SearchCharts.class);
+			this.startActivity(cIntent);
 			break;
 		}
 		return super.onOptionsItemSelected(item);

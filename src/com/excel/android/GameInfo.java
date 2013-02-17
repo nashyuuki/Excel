@@ -1,15 +1,22 @@
 package com.excel.android;
 
+import java.util.GregorianCalendar;
+import java.util.Vector;
+
 public class GameInfo
 {
 	private String name;
 	private String people;
 	private String time;
 	private String year;
-	private int number;
+	private Vector<GregorianCalendar> record;
 	public GameInfo()
 	{
-		number=-1;
+		record=new Vector<GregorianCalendar>();
+	}
+	public void putRecord(GregorianCalendar calendar)
+	{
+		record.add(calendar);
 	}
 	public String getName()
 	{
@@ -43,16 +50,27 @@ public class GameInfo
 	{
 		this.year = year;
 	}
-	public void setNumber(int number)
+	public String[] getRecord()
 	{
-		this.number = number;
+		String[] value=new String[record.size()];
+		for(int i=0;i<value.length;i++)
+		{
+			value[i]=DateInfo.getDateString(record.get(i));
+		}
+	   return value;
 	}
 	public int getNumber()
 	{
+		int number=-1;
+		if(record.size()!=0)
+		{
+			number=record.size();
+		}
 		return number;
 	}
 	public String getInfo()
 	{
+		int number=this.getNumber();
 		if(number==-1)
 		{
 			return "人數:"+people+" 時間:"+time+" 歲數:"+year;

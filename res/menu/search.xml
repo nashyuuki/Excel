@@ -40,4 +40,6 @@
     </item>
     <item android:id="@+id/search_date"
         android:title="@string/search_date" />
+    <item android:id="@+id/search_charts"
+        android:title="@string/search_charts" />
 </menu>
