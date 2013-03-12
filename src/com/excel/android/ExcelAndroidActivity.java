@@ -217,6 +217,12 @@ public class ExcelAndroidActivity extends DataListActivity
 		number = new Number(column, row, integer, cellFormat);
 		sheet.addCell(number);
 	}
+	private void clearCell(WritableSheet sheet, int column, int row)
+			throws WriteException, RowsExceededException
+	{
+		Label label = new Label(column, row, "", cellFormat);
+		sheet.addCell(label);
+	}
 	private void addDate (WritableSheet sheet, int column, int row,
 			Date date) throws WriteException, RowsExceededException
 	{
@@ -234,7 +240,6 @@ public class ExcelAndroidActivity extends DataListActivity
 			return null;
 		}
 	}
-	@Override
 	protected void onDestroy()
 	{
 		if(isSave)
@@ -249,6 +254,10 @@ public class ExcelAndroidActivity extends DataListActivity
 					if (gameInfos[i].getNumber() != -1)
 					{
 						addNumber(excelSheet, 4, i, gameInfos[i].getNumber());
+					}
+					else
+					{
+						this.clearCell(excelSheet, 4, i);
 					}
 				}
 				WritableSheet chartsSheet = wbsheet.getSheet(1);
